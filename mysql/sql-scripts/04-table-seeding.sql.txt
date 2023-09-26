@@ -1,0 +1,4 @@
+INSERT INTO sample_data.products_catalog
+(ProductID, ProductName, ProductBrand, Target_Gender, Price, Currency, Description, Launch_Date)
+VALUES(9012, 'Casual Shirts', 'Ralph Lauren', 'Male', 106.00, 'Euro', 'Crafted from our sh', '2023-07-17'),
+      (9013, 'Tees', 'Gucci', 'Female', 77.00, 'Euro', '', '2023-07-15');

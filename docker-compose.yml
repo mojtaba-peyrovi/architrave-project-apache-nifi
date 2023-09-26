@@ -1,16 +1,21 @@
+
 version: '3'
 services:
   nifi:
     build:
-      context: ./nifi
+      context: .
+      dockerfile: ./nifi/Dockerfile-nifi
     ports:
-      - "8080:8080"
-    volumes:
-      - ./data/input:/data/input
-      - ./data/output:/data/output
-    networks:
-      - nifi-net
+      - "8446:8446"
 
-networks:
-  nifi-net:
 
+  mysql:
+    build:
+      context: .
+      dockerfile: ./mysql/Dockerfile-mysql
+    environment:
+      MYSQL_DATABASE: sample_data
+      MYSQL_USER: architrave
+      MYSQL_PASSWORD: 11111
+    ports:
+      - "3307:3307"

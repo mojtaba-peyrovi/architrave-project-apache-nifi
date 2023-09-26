@@ -1,0 +1,2 @@
+CREATE USER 'archituser'@'%' IDENTIFIED BY '11111';
+GRANT ALL PRIVILEGES ON *.* TO 'archituser'@'%' WITH GRANT OPTION;

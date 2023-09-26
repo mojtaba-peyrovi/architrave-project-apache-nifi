@@ -1,0 +1,6 @@
+FROM apache/nifi:latest
+
+
+ENTRYPOINT ["../scripts/start.sh"]
+
+

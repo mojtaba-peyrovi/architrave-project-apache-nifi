@@ -1,0 +1,14 @@
+CREATE TABLE sample_data.products_catalog (
+	ProductID INT auto_increment NOT NULL,
+	ProductName varchar(100) NOT NULL,
+	ProductBrand varchar(100) NOT NULL,
+	Target_Gender varchar(100) NULL,
+	Price DOUBLE PRECISION NOT NULL,
+	Currency varchar(100) NOT NULL,
+	Description TEXT NULL,
+	Launch_Date DATE NOT NULL,
+
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_0900_ai_ci;
