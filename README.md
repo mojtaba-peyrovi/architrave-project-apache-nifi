@@ -6,15 +6,15 @@ Author: Mojtaba Peyrovi - Data engineer
 
 Contents:
 
-* How to run the project?
-    - docker setup
-    - GitHub
+
 * Walk through the solution
     - The process overview
     - what was achived and what didn't work
     - How to improve the results
 
-
+* How to run the project?
+    - docker setup
+    - GitHub
 
 ## 1. Walk through the solution:
 
@@ -170,4 +170,30 @@ __E.__ Using JoltTransformJSON, we update the two SCD columns, as shown in the f
 __F.__ The data gets written to the history table.
 
 
+### 1.2 what was achived and what didn't work?
+As mentioned above, this project is far from perfect according to the industry standards because of me being absolutely new to the tool, the learning curve of Nifi and lack of a strong community around Nifi to help with debugging and learning.
 
+__Achievements:__ 
+- The core functionality of SCD type 2 is implemented as expected
+- Some basic logging added as an example of data quality checking
+- Docker implementation with some limitations
+
+__What is not achieved?__
+
+- The update flow does not work with more than one update, meaning that if a record gets updated multiple times, the old prices get replaced witht the latest history. There must be a step right before we update the latest history -- this step is called 'update the required fields' as per the following screenshot-- to overweite only the history with is_current='Y'. Unfortunately, I didn't find a way to handle this.  
+
+<img src='./screenshots/Screenshot 2023-09-27 000703.png'>
+
+- Also, Task 2 of the second route should be running before Task 1. In order to do so, I tried to implement a delay. My research showed two ways: 
+
+    - Using Wait processor
+    - Changing the run schedule of the first processor in Task 1 to be delayed 
+
+Somehow, I didn't manage to find the solution due to the short time. 
+
+
+### 1.3 What can be added for the next iteration?
+- Using group processors can increase the readability of the project
+- A strong logging system coupled with a powerful notification system can help data quality improvements
+- Adding db credentials as environment variables or a config file.
+- 
