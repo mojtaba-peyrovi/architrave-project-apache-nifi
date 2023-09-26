@@ -1,0 +1,16 @@
+version: '3'
+services:
+  nifi:
+    build:
+      context: ./nifi
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data/input:/data/input
+      - ./data/output:/data/output
+    networks:
+      - nifi-net
+
+networks:
+  nifi-net:
+
