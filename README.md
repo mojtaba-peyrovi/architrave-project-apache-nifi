@@ -16,6 +16,8 @@ Contents:
     - docker setup
     - GitHub
 
+* An example with screenshots
+
 ## 1. Walk through the solution:
 
 __Overview:__ It was my very first time working with Nifi and I enjoyed a lot learning a new platform and was very intersting to know different approached to SCD than I already know. Overal it was a very positive experience and I learned so much, although it can be improved a lot and this can be seen as a Proof of Concept. 
@@ -98,9 +100,9 @@ As mentioned in the project description, we are expecting only prices to be chan
 
 __TASK 1:__ A new row should be added with the new price and the three SCD-related columns as follows:
 ```
-- valid_from: takes the timestamp of now 
-- valid_until: remains null since it is a new record in the target table
-- is_current: remains as 'Y'
+**valid_from:** takes the timestamp of now 
+- __valid_until:__ remains null since it is a new record in the target table
+- __is_current:__ remains as 'Y'
 ``` 
 
 To achieve task 1, the following steps are taken:
@@ -114,9 +116,9 @@ __C.__ The JSON inside the FlowFile gets prepared for MYSQL and gets written int
 
 __TASK 2:__ The latest row belonging to the same product needs to be found and the following changes to be implemented on its SCD-related columns:
 ```
-- valid_from: remains unchanged.
-- valid_until: takes the timestamp of now showing that this record just expired.
-- is_current: changes from 'Y' to 'N' showing that this record is not current anymore.
+- __valid_from:__ remains unchanged.
+- __valid_until:__ takes the timestamp of now showing that this record just expired.
+- __is_current:__ changes from 'Y' to 'N' showing that this record is not current anymore.
 ```
 
 In order to implement TASK 2, here are the steps taken:
@@ -196,6 +198,7 @@ Somehow, I didn't manage to find the solution due to the short time.
 - Using group processors can increase the readability of the project
 - A strong logging system coupled with a powerful notification system can help data quality improvements
 - Adding db credentials as environment variables or a config file.
+- For the next step it is very necessary to generate surrogate keys to have them as the primary key of the history table. I did some research about it and one way is to use Groovy to generate UUID and use them as unique identifiers, similar to the solution introduced in [this](https://community.cloudera.com/t5/Support-Questions/How-to-generate-UUID-in-apache-NIFI/td-p/205094) article.
 
 
 ## 2. Project structure and docker setup
@@ -210,7 +213,8 @@ __sql_scripts:__ Includes Sql scripts to run once the container is created. Here
     
     * create user
     * create database
-    * create table
+    * create source table table
+    * create history table
     * insert some sample data into the table
 
 The sql-scripts folder gets copied to docker-entrypoint-initdb.d folder in the container to be run on startup.
@@ -230,7 +234,7 @@ __NOTE:__ The ports and credentials specified in the XML template may require to
 
 
 
-## 3. How to run the container
+## 3. How to run the project
 
 To have the container run, follow the following steps:
 
@@ -260,5 +264,46 @@ grep Generated nifi-app*log
 
 - Using the credentials, log into the nifi instance and from __templates__ folder import __version9.0.XML__ into the isntance and it should be ready to use. 
 
+
+
+## 4. An example with screenshots
+
+Let's run the following code to add a new row to the source table:
+```
+INSERT INTO sample_data.products_catalog
+(ProductID, ProductName, ProductBrand, Target_Gender, Price, Currency, Description, Launch_Date)
+VALUES(9014, 'fancy pants', 'Hugo Boss', 'Female', 56.00, 'Euro', 'Created with love', '2023-08-01')   
+```
+The new row is added to the source table:
+<img src='./screenshots/Screenshot 2023-09-27 092848.png'>
+
+Now let's turn on the pipeline on nifi and see what is recorded on the products_catalog_history table:
+
+<img src='./screenshots/Screenshot 2023-09-27 095727.png'>
+
+As we can see, two rows are the initial rows and the row with id ID 9014 is added right after it was added to the source table.
+
+Notice the SCD-related columns below:
+<img src='./screenshots/Screenshot 2023-09-27 101522.png'>
+
+Now, let's edit the price value from 56 to 100 and see what happens in the history table.
+
+```
+UPDATE sample_data.products_catalog
+SET 
+    price = 100.00
+WHERE
+    ProductID  = 9014;
+```
+Now the old row is updated (valid_until changed to now, and is_current changed to N)
+
+<img src='./screenshots/Screenshot 2023-09-27 102212.png'>
+
+Also, a new row is added with the new price and related SCD columns as seen below:
+<img src='./screenshots/Screenshot 2023-09-27 102441.png'>
+
+
+And this final view shows both rows generated for SCD related to productID 9014:
+<img src='./screenshots/Screenshot 2023-09-27 102607.png'>
 
 

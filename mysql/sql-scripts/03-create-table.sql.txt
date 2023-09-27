@@ -1,14 +1,41 @@
 CREATE TABLE sample_data.products_catalog (
-	ProductID INT auto_increment NOT NULL,
+	ProductID INT NOT NULL,
 	ProductName varchar(100) NOT NULL,
 	ProductBrand varchar(100) NOT NULL,
 	Target_Gender varchar(100) NULL,
 	Price DOUBLE PRECISION NOT NULL,
 	Currency varchar(100) NOT NULL,
-	Description TEXT NULL,
-	Launch_Date DATE NOT NULL,
+	Description TEXT null,
+	Launch_date DATE not NULL,
+	Loaded_at DATE not NULL 
 
 )
+
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+
+
+CREATE TABLE sample_data.products_catalog_history  (
+	ProductID INT NOT NULL,
+	ProductName varchar(100) NOT NULL,
+	ProductBrand varchar(100) NOT NULL,
+	Target_Gender varchar(100) NULL,
+	Price DOUBLE PRECISION NOT NULL,
+	Currency varchar(100) NOT NULL,
+	Description TEXT null,
+	Launch_date DATE not NULL,
+	Loaded_at DATE not null,
+	valid_from TIMESTAMP not NULL,
+	valid_until TIMESTAMP null,
+    Is_current varchar(10) not NULL
+
+)
+
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_0900_ai_ci;
