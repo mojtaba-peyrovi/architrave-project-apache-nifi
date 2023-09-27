@@ -1,7 +1,7 @@
 # Use the official MySQL image as the base image
 FROM mysql:8.0.32
 
-# Set the MySQL root password (customize as needed)
+# Set the MySQL root password
 ENV MYSQL_ROOT_PASSWORD=11111
 
 
@@ -9,6 +9,6 @@ ENV MYSQL_ROOT_PASSWORD=11111
 COPY ./mysql/sql-scripts /docker-entrypoint-initdb.d
 
 # Expose MySQL port
-EXPOSE 3307
+EXPOSE 3306
 
 

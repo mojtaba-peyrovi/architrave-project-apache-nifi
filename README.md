@@ -196,4 +196,69 @@ Somehow, I didn't manage to find the solution due to the short time.
 - Using group processors can increase the readability of the project
 - A strong logging system coupled with a powerful notification system can help data quality improvements
 - Adding db credentials as environment variables or a config file.
-- 
+
+
+## 2. Project structure and docker setup
+
+
+### Docker setup:
+I created a Docker Compose setup with both Apache NiFi and MySQL, and configured the MySQL container to create users, databases, and tables when the containers are run, involves defining two Dockerfiles (one for NiFi and one for MySQL) and a docker-compose.yml file.
+
+
+### mysql folder: 
+__sql_scripts:__ Includes Sql scripts to run once the container is created. Here are the scripts:
+    
+    * create user
+    * create database
+    * create table
+    * insert some sample data into the table
+
+The sql-scripts folder gets copied to docker-entrypoint-initdb.d folder in the container to be run on startup.
+
+__Dockerfile-mysql:__ To specify the mysql version, port, etc. This file is referenced in docker-compose.yml.
+
+### nifi folder:
+__templates:__ includes the XML template extracted from my nifi instance. This has to be imported in the container after nifi gets installed.
+
+__Dockerfile-nifi:__ to specity the nifi version, port, any relevant settings to be referenced in the docker-compose.yml later on.
+
+### Screenshots:
+includes all screenshots used in the README.md
+
+
+__NOTE:__ The ports and credentials specified in the XML template may require to be synced and double checked with the docker instance. 
+
+
+
+## 3. How to run the container
+
+To have the container run, follow the following steps:
+
+- clone the following repository:
+https://github.com/mojtaba-peyrovi/architrave-project-apache-nifi
+- run the docker compose:
+```
+docker-compose up --build
+```
+- The nifi UI must be up and running at 
+https://127.0.0.1:8443
+
+- The MySQL database should be live at https://127.0.0.1:3306 using the following credentials:
+```
+un: archituser
+pw: 11111
+```
+- log into the nifi container and find the generated credentials from the generated logs:
+```
+docker exec -t -i <container_id> /bin/bash
+
+cd /opt/nifi/nifi-current/logs
+
+grep Generated nifi-app*log
+
+```
+
+- Using the credentials, log into the nifi instance and from __templates__ folder import __version9.0.XML__ into the isntance and it should be ready to use. 
+
+
+

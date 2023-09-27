@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./nifi/Dockerfile-nifi
     ports:
-      - "8446:8446"
+      - "8443:8443"
 
 
   mysql:
@@ -18,4 +18,4 @@ services:
       MYSQL_USER: architrave
       MYSQL_PASSWORD: 11111
     ports:
-      - "3307:3307"
+      - "3306:3306"
