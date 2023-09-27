@@ -282,7 +282,7 @@ Now let's turn on the pipeline on nifi and see what is recorded on the products_
 
 <img src='./screenshots/Screenshot 2023-09-27 095727.png'>
 
-As we can see, two rows are the initial rows and the row with id ID 9014 is added right after it was added to the source table.
+As we can see, the first two rows initiated while creating the container, and the row with id ID 9014 is added right after it was added to the source table.
 
 Notice the SCD-related columns below:
 <img src='./screenshots/Screenshot 2023-09-27 101522.png'>
