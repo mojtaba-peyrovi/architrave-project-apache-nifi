@@ -20,13 +20,13 @@ Author: Mojtaba Peyrovi - Data engineer
 
 ## 1. Walk through the solution:
 
-__Overview:__ It was my very first time working with Nifi and I enjoyed a lot learning a new platform and was very intersting to know different approached to SCD than I already know. Overal it was a very positive experience and I learned so much, although it can be improved a lot and this can be seen as a Proof of Concept. 
+__Overview:__ It was my very first time working with Nifi and I enjoyed a lot learning a new platform and was very intersting to know different approached to SCD than I already know. Overal it was a very positive experience and I learned so much, although my solution has a lot of room for improvement and it can be seen as a Proof of Concept. 
 
 
 ### 1.1 The process overview:
-As we can see below, the process starts with a CDC processor to capture any change to our source table, __products_catalog.
+As we can see below, the process starts with a CDC processor to capture any change to our source table, __products_catalog.__
 
-Next, we split the flow into two routes based on whether the change in adding a new row, or updating a current row. In an ideal world, we need to be able to handle delete, DDL, commit, and begin events, but I will focus on add and update for this POC.
+Next, we split the flow into two routes based on whether the change is adding a new row, or updating a current row. In an ideal world, we need to be able to handle delete, DDL, commit, and begin events, but I will focus on add and update for this POC.
 <img src='./screenshots/Screenshot 2023-09-26 222323.png'>
 
 
@@ -37,7 +37,9 @@ Next, we split the flow into two routes based on whether the change in adding a 
 
 These are the steps when a new record comes into the source table:
 
-__A.__ All metadata from the incoming JSON via the FlowFlie get removed and only the key-value pairs of actual data gets stored as a flat JSON.
+__A.__ All metadata from the incoming JSON via the FlowFlie get removed and only the key-value pairs of actual data gets stored as a flat JSON, using the following regex:
+
+<img src='./screenshots/Screenshot 2023-09-27 105516.png'>
 
 __B.__ Using JoltTranformJSON processor, we add the following three columns:
 
