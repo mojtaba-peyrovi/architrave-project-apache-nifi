@@ -102,9 +102,9 @@ As mentioned in the project description, we are expecting only prices to be chan
 
 __TASK 1:__ A new row should be added with the new price and the three SCD-related columns as follows:
 ```
-**valid_from:** takes the timestamp of now 
-- __valid_until:__ remains null since it is a new record in the target table
-- __is_current:__ remains as 'Y'
+- valid_from: takes the timestamp of now 
+- valid_until: remains null since it is a new record in the target table
+- is_current: remains as 'Y'
 ``` 
 
 To achieve task 1, the following steps are taken:
@@ -118,9 +118,9 @@ __C.__ The JSON inside the FlowFile gets prepared for MYSQL and gets written int
 
 __TASK 2:__ The latest row belonging to the same product needs to be found and the following changes to be implemented on its SCD-related columns:
 ```
-- __valid_from:__ remains unchanged.
-- __valid_until:__ takes the timestamp of now showing that this record just expired.
-- __is_current:__ changes from 'Y' to 'N' showing that this record is not current anymore.
+- valid_from:remains unchanged.
+- valid_until: takes the timestamp of now showing that this record just expired.
+- is_current: changes from 'Y' to 'N' showing that this record is not current anymore.
 ```
 
 In order to implement TASK 2, here are the steps taken:
@@ -180,7 +180,7 @@ As mentioned above, this project is far from perfect according to the industry s
 __Achievements:__ 
 - The core functionality of SCD type 2 is implemented as expected
 - Some basic logging added as an example of data quality checking
-- Docker implementation with some limitations
+- Docker implementation
 
 __What is not achieved?__
 
@@ -199,8 +199,8 @@ Somehow, I didn't manage to find the solution due to the short time.
 ### 1.3 What can be added for the next iteration?
 - Using group processors can increase the readability of the project
 - A strong logging system coupled with a powerful notification system can help data quality improvements
-- Adding db credentials as environment variables or a config file.
-- For the next step it is very necessary to generate surrogate keys to have them as the primary key of the history table. I did some research about it and one way is to use Groovy to generate UUID and use them as unique identifiers, similar to the solution introduced in [this](https://community.cloudera.com/t5/Support-Questions/How-to-generate-UUID-in-apache-NIFI/td-p/205094) article.
+- Adding db credentials and sensitive info to environment variables or a config file.
+- For the next step it is very necessary to generate surrogate keys to have them as the primary key of the history table. I did some research about it and found that one way is to use Groovy to generate UUID and use them as unique identifiers, similar to the solution introduced in [this](https://community.cloudera.com/t5/Support-Questions/How-to-generate-UUID-in-apache-NIFI/td-p/205094) article.
 
 
 ## 2. Project structure and docker setup
@@ -240,8 +240,7 @@ __NOTE:__ The ports and credentials specified in the XML template may require to
 
 To have the container run, follow the following steps:
 
-- clone the following repository:
-https://github.com/mojtaba-peyrovi/architrave-project-apache-nifi
+- clone the current repo
 - run the docker compose:
 ```
 docker-compose up --build
@@ -264,7 +263,7 @@ grep Generated nifi-app*log
 
 ```
 
-- Using the credentials, log into the nifi instance and from __templates__ folder import __version9.0.XML__ into the isntance and it should be ready to use. 
+- Using the credentials, log into the nifi instance and from __templates__ folder import __final_template.XML__ into the isntance and it should be ready to use. 
 
 
 
