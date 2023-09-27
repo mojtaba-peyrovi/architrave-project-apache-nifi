@@ -4,17 +4,18 @@ Author: Mojtaba Peyrovi - Data engineer
 
 
 
-Contents:
+## Contents:
 
 
-* Walk through the solution
-    - The process overview
-    - what was achived and what didn't work
-    - How to improve the results
-
-* How to run the project?
-    - docker setup
-    - GitHub
+1. Walk through the solution
+    - 1.1 The process overview
+        - 1.1.1 First route: NEW ROW ADDED
+        - 1.1.2 Second route: AN EXISTING ROW IS UPDATED
+    - 1.2 what was achived and what didn't work?
+    - 1.3 What can be added for the next iteration?
+2. Project structure and docker setup
+3. How to run the project
+4. An example with screenshots
 
 * An example with screenshots
 
