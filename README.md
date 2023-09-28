@@ -214,7 +214,7 @@ __sql_scripts:__ Includes Sql scripts to run once the container is created. Here
     
     * create user
     * create database
-    * create source table table
+    * create source table
     * create history table
     * insert some sample data into the table
 
