@@ -15,8 +15,7 @@ Author: Mojtaba Peyrovi - Data engineer
     - 1.3 What can be added for the next iteration?
 2. Project structure and docker setup
 3. How to run the project
-4. An example with screenshots
-5. An example with screenshots
+4. An example with screenshot
 
 ## 1. Walk through the solution:
 
