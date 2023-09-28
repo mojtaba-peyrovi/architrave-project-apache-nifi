@@ -83,7 +83,7 @@ __C.__ Prepare the data for writing on MYSQL and write them into __products_cata
 
 __D.__ At the end add a log on failure and they info will be stored at:
 ```
-./logs/nifi-app.txt
+./logs/nifi-app.log
 ```
 Of course, it is not the best way of logging and in case of a real world data product, we can use processors such as __putEmail__ or find solutions like webhooks or other real time solution to send notifications to users via email, slack, etc. and write custome logs on separate files. 
 
